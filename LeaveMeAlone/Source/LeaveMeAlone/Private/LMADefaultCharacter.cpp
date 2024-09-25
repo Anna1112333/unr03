@@ -14,13 +14,23 @@ ALMADefaultCharacter::ALMADefaultCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	SpringArmComponent->SetUsingAbsoluteRotation(true);
+	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArm");//+++
+	SpringArmComponent->SetupAttachment(GetRootComponent());//+++
 	SpringArmComponent->TargetArmLength = ArmLength;
+	SpringArmComponent->SetUsingAbsoluteRotation(true);	
 	SpringArmComponent->SetRelativeRotation(FRotator(YRotation, 0.0f, 0.0f));
 	SpringArmComponent->bDoCollisionTest = false;
 	SpringArmComponent->bEnableCameraLag = true;
+	
+	
+	
+	CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");//+++
+	CameraComponent->SetupAttachment(SpringArmComponent);//+++
 	CameraComponent->SetFieldOfView(FOV);
 	CameraComponent->bUsePawnControlRotation = false;
+	
+	
+
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;

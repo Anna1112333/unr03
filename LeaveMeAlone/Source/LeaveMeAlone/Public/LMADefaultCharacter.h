@@ -1,17 +1,17 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+#include "LMAGameMode.h"    //+++ сама поняла
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+//#include "Camera/CameraComponent.h"
+//#include "Components/DecalComponent.h"              //---
+//#include "Components/InputComponent.h"
+//#include "GameFramework/SpringArmComponent.h"
+//#include "Kismet/GameplayStatics.h"
+//#include "Kismet/KismetMathLibrary.h"
 #include "LMADefaultCharacter.generated.h"
 
-#include "Camera/CameraComponent.h"
-#include "Components/DecalComponent.h"
-#include "Components/InputComponent.h"
-#include "GameFramework/SpringArmComponent.h"
-#include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetMathLibrary.h"
 class UCameraComponent;
 class USpringArmComponent;
 
@@ -19,16 +19,18 @@ UCLASS()
 class LEAVEMEALONE_API ALMADefaultCharacter : public ACharacter
 {
 	GENERATED_BODY()
+public:
+	// Sets default values for this character's properties
+	ALMADefaultCharacter();
 
+private:
 	float YRotation = -75.0f; // отвечает за поворот камеры по оси Y.
 	float ArmLength = 1400.0f; // отвечает за длину штатива.
 	float FOV = 55.0f; // отвечает за поле зрения камеры.
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 
-public:
-	// Sets default values for this character's properties
-	ALMADefaultCharacter();
+protected:
 	UPROPERTY()
 	UDecalComponent* CurrentCursor = nullptr;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cursor")
