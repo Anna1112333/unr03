@@ -29,7 +29,7 @@ private:
 	float FOV = 55.0f; // отвечает за поле зрения камеры.
 	void MoveForward(float Value);
 	void MoveRight(float Value);
-	//void Mouse(float Value);
+	void Mouse(float Value);
 
 protected:
 	UPROPERTY()

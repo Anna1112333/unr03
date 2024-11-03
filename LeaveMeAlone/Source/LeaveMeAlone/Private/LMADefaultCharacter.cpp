@@ -73,7 +73,7 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis("MoveForward", this, &ALMADefaultCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);
-//	PlayerInputComponent->BindAxis("Mouse", this, &ALMADefaultCharacter::Mouse);
+	PlayerInputComponent->BindAxis("Mouse", this, &ALMADefaultCharacter::Mouse);
 }
 void ALMADefaultCharacter::MoveForward(float Value) {
 	AddMovementInput(GetActorForwardVector(), Value);
@@ -82,7 +82,7 @@ void ALMADefaultCharacter::MoveForward(float Value) {
 void ALMADefaultCharacter::MoveRight(float Value) {
 	AddMovementInput(GetActorRightVector(), Value);
 }
-/*
+
 void ALMADefaultCharacter::Mouse(float Value) {
-	AddMovementInput(GetActorRightVector(), Value);
-}*/
+	AddMovementInput(SpringArmComponent->GetComponentLocation(), Value);
+}
