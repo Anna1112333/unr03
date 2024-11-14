@@ -2,7 +2,7 @@
 
 
 #include "LMADefaultCharacter.h"
-#include "D:\Games2024\Task\Ta_3\LeaveMeAlone\Source\LeaveMeAlone\Public\LMADefaultCharacter.h"
+//#include "D:\Games2024\Task\Ta_3\LeaveMeAlone\Source\LeaveMeAlone\Public\LMADefaultCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
 #include "Components/InputComponent.h"
@@ -73,7 +73,8 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis("MoveForward", this, &ALMADefaultCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);
-	PlayerInputComponent->BindAxis("Mouse", this, &ALMADefaultCharacter::Mouse);
+	//PlayerInputComponent->BindAction(TEXT("Mouse0"), IE_Pressed, LMADefaultCharacter, &ALMADefaultCharacter::Mouse0);
+	PlayerInputComponent->BindAxis("Mouse0", this, &ALMADefaultCharacter::Mouse0);
 }
 void ALMADefaultCharacter::MoveForward(float Value) {
 	AddMovementInput(GetActorForwardVector(), Value);
@@ -83,6 +84,10 @@ void ALMADefaultCharacter::MoveRight(float Value) {
 	AddMovementInput(GetActorRightVector(), Value);
 }
 
-void ALMADefaultCharacter::Mouse(float Value) {
-	AddMovementInput(SpringArmComponent->GetComponentLocation(), Value);
+//void ALMADefaultCharacter::changeSP(float val) {	SpringArmComponent->TargetArmLength += val;}
+
+void ALMADefaultCharacter::Mouse0(float Value) {
+	SpringArmComponent->TargetArmLength = SpringArmComponent->TargetArmLength * 50*Value;
+	//ALMADefaultCharacter::ArmLength = ALMADefaultCharacter::ArmLength + Value*50;	
+	//AddMovementInput(&ALMADefaultCharacter::changeSP, Value); void нужно переделать в вектор?
 }

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 #include "LMAGameMode.h"    //+++ сама поняла
@@ -29,6 +29,7 @@ private:
 	float FOV = 55.0f; // отвечает за поле зрения камеры.
 	void MoveForward(float Value);
 	void MoveRight(float Value);
+	void Mouse0(float Value);
 	void Mouse(float Value);
 
 protected:
@@ -50,7 +51,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	//void changeSP(float val);
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
