@@ -84,10 +84,10 @@ void ALMADefaultCharacter::MoveRight(float Value) {
 	AddMovementInput(GetActorRightVector(), Value);
 }
 
-//void ALMADefaultCharacter::changeSP(float val) {	SpringArmComponent->TargetArmLength += val;}
-
+FVector ALMADefaultCharacter::changeSP(float val) { ALMADefaultCharacter::SpringArmComponent->TargetArmLength += val; return { 1.0f, 1.0f, 1.0f }; }
+void ALMADefaultCharacter::Mouse(float Value) {}
 void ALMADefaultCharacter::Mouse0(float Value) {
 	SpringArmComponent->TargetArmLength = SpringArmComponent->TargetArmLength * 50*Value;
 	//ALMADefaultCharacter::ArmLength = ALMADefaultCharacter::ArmLength + Value*50;	
-	//AddMovementInput(&ALMADefaultCharacter::changeSP, Value); void нужно переделать в вектор?
+	//AddMovementInput(ALMADefaultCharacter::changeSP, Value); //void нужно переделать в вектор?
 }
