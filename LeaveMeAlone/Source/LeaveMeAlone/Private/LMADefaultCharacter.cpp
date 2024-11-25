@@ -20,23 +20,23 @@ ALMADefaultCharacter::ALMADefaultCharacter()
 	SpringArmComponent->SetUsingAbsoluteRotation(true);	
 	SpringArmComponent->SetRelativeRotation(FRotator(YRotation, 0.0f, 0.0f));
 	SpringArmComponent->bDoCollisionTest = false;
-	SpringArmComponent->bEnableCameraLag = true;
-	
-	
+	SpringArmComponent->bEnableCameraLag = true;	
+
+
 	
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");//+++
 	CameraComponent->SetupAttachment(SpringArmComponent);//+++
 	CameraComponent->SetFieldOfView(FOV);
-	CameraComponent->bUsePawnControlRotation = false;
-	
-	
+	CameraComponent->bUsePawnControlRotation = false;	
+
+
 
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 }
 
-// Called when the game starts or when spawned
+
 void ALMADefaultCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -47,7 +47,7 @@ void ALMADefaultCharacter::BeginPlay()
 	
 }
 
-// Called every frame
+
 void ALMADefaultCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -72,9 +72,8 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis("MoveForward", this, &ALMADefaultCharacter::MoveForward);
-	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);
-	//PlayerInputComponent->BindAction(TEXT("Mouse0"), IE_Pressed, LMADefaultCharacter, &ALMADefaultCharacter::Mouse0);
-	PlayerInputComponent->BindAxis("Mouse0", this, &ALMADefaultCharacter::Mouse0);
+	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);	
+	PlayerInputComponent->BindAxis("Mouse", this, &ALMADefaultCharacter::Mouse0);
 }
 void ALMADefaultCharacter::MoveForward(float Value) {
 	AddMovementInput(GetActorForwardVector(), Value);
@@ -84,10 +83,11 @@ void ALMADefaultCharacter::MoveRight(float Value) {
 	AddMovementInput(GetActorRightVector(), Value);
 }
 
-FVector ALMADefaultCharacter::changeSP(float val) { ALMADefaultCharacter::SpringArmComponent->TargetArmLength += val; return { 1.0f, 1.0f, 1.0f }; }
-void ALMADefaultCharacter::Mouse(float Value) {}
+void ALMADefaultCharacter::changeSP(float val) {
+	SpringArmComponent->TargetArmLength = FMath::Clamp(SpringArmComponent->TargetArmLength + val * SP, minSP, maxSP);
+
+}
 void ALMADefaultCharacter::Mouse0(float Value) {
-	SpringArmComponent->TargetArmLength = SpringArmComponent->TargetArmLength * 50*Value;
-	//ALMADefaultCharacter::ArmLength = ALMADefaultCharacter::ArmLength + Value*50;	
-	//AddMovementInput(ALMADefaultCharacter::changeSP, Value); //void нужно переделать в вектор?
+	changeSP(Value);
+	AddMovementInput(UKismetMathLibrary::GetForwardVector({ 0,0, CameraComponent->GetComponentRotation().Yaw }), Value);
 }
