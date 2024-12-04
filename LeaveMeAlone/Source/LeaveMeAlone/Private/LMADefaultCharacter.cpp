@@ -21,19 +21,18 @@ ALMADefaultCharacter::ALMADefaultCharacter()
 	SpringArmComponent->SetRelativeRotation(FRotator(YRotation, 0.0f, 0.0f));
 	SpringArmComponent->bDoCollisionTest = false;
 	SpringArmComponent->bEnableCameraLag = true;	
-
-
 	
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");//+++
 	CameraComponent->SetupAttachment(SpringArmComponent);//+++
 	CameraComponent->SetFieldOfView(FOV);
 	CameraComponent->bUsePawnControlRotation = false;	
 
-
-
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
+
+
+	HealthComponent = CreateDefaultSubobject<ULMAHealthComponent>("HealthComponent");
 }
 
 
@@ -83,11 +82,8 @@ void ALMADefaultCharacter::MoveRight(float Value) {
 	AddMovementInput(GetActorRightVector(), Value);
 }
 
-void ALMADefaultCharacter::changeSP(float val) {
-	SpringArmComponent->TargetArmLength = FMath::Clamp(SpringArmComponent->TargetArmLength + val * SP, minSP, maxSP);
 
-}
 void ALMADefaultCharacter::Mouse0(float Value) {
-	changeSP(Value);
-	AddMovementInput(UKismetMathLibrary::GetForwardVector({ 0,0, CameraComponent->GetComponentRotation().Yaw }), Value);
+	SpringArmComponent->TargetArmLength = FMath::Clamp(SpringArmComponent->TargetArmLength + Value * SP, minSP, maxSP);
+	AddMovementInput(UKismetMathLibrary::GetForwardVector({ 0, 0, CameraComponent->GetComponentRotation().Yaw }), Value);
 }

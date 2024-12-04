@@ -9,6 +9,7 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class ULMAHealthComponent;
 
 UCLASS()
 class LEAVEMEALONE_API ALMADefaultCharacter : public ACharacter
@@ -41,6 +42,8 @@ protected:
 	float minSP = 400.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SPR")
 	float maxSP = 1400.0f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components|Health")
+	ULMAHealthComponent*  HealthComponent;
 
 protected:
 	// Called when the game starts or when spawned
@@ -51,9 +54,10 @@ protected:
 	UCameraComponent* CameraComponent;
 
 public:	
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	 void changeSP(float val);
+	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
