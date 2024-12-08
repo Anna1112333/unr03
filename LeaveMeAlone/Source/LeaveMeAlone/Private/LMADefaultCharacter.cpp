@@ -32,7 +32,7 @@ ALMADefaultCharacter::ALMADefaultCharacter()
 	bUseControllerRotationRoll = false;
 
 
-	HealthComponent = CreateDefaultSubobject<ULMAHealthComponent>("HealthComponent");
+	//HealthComponent = CreateDefaultSubobject<ULMAHealthComponent>("HealthComponent");
 }
 
 

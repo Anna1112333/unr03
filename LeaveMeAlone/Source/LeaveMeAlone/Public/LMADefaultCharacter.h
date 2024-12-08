@@ -3,6 +3,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+//#include "ULMAHealthComponent.h"
 #include "D:\Games2024\Task\Ta_3\LeaveMeAlone\Source\LeaveMeAlone\Public\LMAGameMode.h"    //+++ сама поняла
 //#include "D:\Games2024\Task\Ta_3\LeaveMeAlone\Intermediate\Build\Win64\UnrealEditor\Inc\LeaveMeAlone\UHT\LMADefaultCharacter.generated.h"
 #include "LMADefaultCharacter.generated.h"
@@ -42,8 +43,8 @@ protected:
 	float minSP = 400.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SPR")
 	float maxSP = 1400.0f;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components|Health")
-	ULMAHealthComponent*  HealthComponent;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components|Health")
+	//ULMAHealthComponent*  HealthComponent;
 
 protected:
 	// Called when the game starts or when spawned
