@@ -11,6 +11,7 @@
 class UCameraComponent;
 class USpringArmComponent;
 class UHealthComponent;
+class UAnimMontage;
 
 UCLASS()
 class LEAVEMEALONE_API ALMADefaultCharacter : public ACharacter
@@ -28,6 +29,8 @@ private:
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void Mouse0(float Value);
+	void OnDeath();
+	void OnHealthChanged(float NewHealth);
 	//void Mouse(float Value);
 
 protected:
@@ -45,6 +48,8 @@ protected:
 	float maxSP = 1400.0f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components|Health")
 	UHealthComponent*  HealthComponent;
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	UAnimMontage* DeathMontage;
 
 protected:
 	// Called when the game starts or when spawned

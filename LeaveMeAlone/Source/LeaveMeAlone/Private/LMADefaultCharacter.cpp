@@ -9,6 +9,10 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Components/HealthComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Engine/Engine.h"
+
 // Sets default values
 ALMADefaultCharacter::ALMADefaultCharacter()
 {
@@ -43,7 +47,10 @@ void ALMADefaultCharacter::BeginPlay()
 	{
 		CurrentCursor = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), CursorMaterial, CursorSize, FVector(0));
 	}
-	
+	HealthComponent->OnDeath.AddUObject(this, &ALMADefaultCharacter::OnDeath);
+	OnHealthChanged(HealthComponent->GetHealth());
+	HealthComponent->OnHealthChanged.AddUObject(this, &ALMADefaultCharacter::OnHealthChanged);
+
 }
 
 
@@ -86,4 +93,16 @@ void ALMADefaultCharacter::MoveRight(float Value) {
 void ALMADefaultCharacter::Mouse0(float Value) {
 	SpringArmComponent->TargetArmLength = FMath::Clamp(SpringArmComponent->TargetArmLength + Value * SP, minSP, maxSP);
 	AddMovementInput(UKismetMathLibrary::GetForwardVector({ 0, 0, CameraComponent->GetComponentRotation().Yaw }), Value);
+}
+
+void ALMADefaultCharacter::OnDeath()
+{
+	PlayAnimMontage(DeathMontage);
+	GetCharacterMovement()->DisableMovement();
+	SetLifeSpan(5.0f);
+}
+
+void ALMADefaultCharacter::OnHealthChanged(float NewHealth)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FString::Printf(TEXT("Health = %f"), NewHealth));
 }
