@@ -57,7 +57,7 @@ void ALMADefaultCharacter::BeginPlay()
 void ALMADefaultCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	/*APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	if (PC)
 	{
 		FHitResult ResultHit;
@@ -69,8 +69,11 @@ void ALMADefaultCharacter::Tick(float DeltaTime)
 		{
 			CurrentCursor->SetWorldLocation(ResultHit.Location);
 		}
+	}*/
+	if (!(HealthComponent->IsDead()))
+	{
+		RotationPlayerOnCursor();
 	}
-
 }
 
 // Called to bind functionality to input
@@ -97,12 +100,38 @@ void ALMADefaultCharacter::Mouse0(float Value) {
 
 void ALMADefaultCharacter::OnDeath()
 {
+	/*PlayAnimMontage(DeathMontage);
+	GetCharacterMovement()->DisableMovement();
+	SetLifeSpan(5.0f);*/
+	CurrentCursor->DestroyRenderState_Concurrent();
 	PlayAnimMontage(DeathMontage);
 	GetCharacterMovement()->DisableMovement();
 	SetLifeSpan(5.0f);
+	if (Controller)
+	{
+		Controller->ChangeState(NAME_Spectating);
+	}
+
 }
 
 void ALMADefaultCharacter::OnHealthChanged(float NewHealth)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FString::Printf(TEXT("Health = %f"), NewHealth));
+}
+
+void ALMADefaultCharacter::RotationPlayerOnCursor()
+{
+	APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (PC)
+	{
+		FHitResult ResultHit;
+		PC->GetHitResultUnderCursor(ECC_GameTraceChannel1, true, ResultHit);
+		float FindRotatorResultYaw = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(),
+			ResultHit.Location).Yaw;
+		SetActorRotation(FQuat(FRotator(0.0f, FindRotatorResultYaw, 0.0f)));
+		if (CurrentCursor)
+		{
+			CurrentCursor->SetWorldLocation(ResultHit.Location);
+		}
+	}
 }

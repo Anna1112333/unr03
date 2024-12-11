@@ -31,6 +31,7 @@ private:
 	void Mouse0(float Value);
 	void OnDeath();
 	void OnHealthChanged(float NewHealth);
+	void RotationPlayerOnCursor();
 	//void Mouse(float Value);
 
 protected:
