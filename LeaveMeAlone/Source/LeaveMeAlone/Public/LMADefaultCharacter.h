@@ -21,7 +21,8 @@ class LEAVEMEALONE_API ALMADefaultCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ALMADefaultCharacter();
-
+	UFUNCTION()
+	UHealthComponent* GetHealthComponent() const { return HealthComponent; }
 private:
 	float YRotation = -75.0f; // отвечает за поворот камеры по оси Y.
 	float ArmLength = 1400.0f; // отвечает за длину штатива.
