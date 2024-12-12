@@ -30,6 +30,10 @@ private:
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void Mouse0(float Value);
+	bool Sprint_1 = false;
+	bool Sprint_2 = false;
+	bool Sprint = false;  //Этот спринт основной
+	void Sprint0(); //добавила импут а спринту
 	void OnDeath();
 	void OnHealthChanged(float NewHealth);
 	void RotationPlayerOnCursor();
@@ -50,9 +54,12 @@ protected:
 	float maxSP = 1400.0f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components|Health")
 	UHealthComponent*  HealthComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Energy") // переменная для выносливости при беге
+	float SprintEnergy=100;
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	UAnimMontage* DeathMontage;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sp")
+	bool Spr = false;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

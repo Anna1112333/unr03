@@ -57,23 +57,19 @@ void ALMADefaultCharacter::BeginPlay()
 void ALMADefaultCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	/*APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	if (PC)
-	{
-		FHitResult ResultHit;
-		PC->GetHitResultUnderCursor(ECC_GameTraceChannel1, true, ResultHit);
-		float FindRotatorResultYaw = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(),
-			ResultHit.Location).Yaw;
-		SetActorRotation(FQuat(FRotator(0.0f, FindRotatorResultYaw, 0.0f)));
-		if (CurrentCursor)
-		{
-			CurrentCursor->SetWorldLocation(ResultHit.Location);
-		}
-	}*/
+	
 	if (!(HealthComponent->IsDead()))
 	{
 		RotationPlayerOnCursor();
 	}
+	if (Sprint_1 == false && Sprint_2 == false) Sprint = false; //неизвестно когда проверит тик переменную, а кргда BindAction , поэтому двойная проверка для выключения спринта
+	if (Sprint_1 == true && Sprint_2 == true) Sprint_1 = false;
+	if (Sprint_1 == false && Sprint_2 == true) Sprint_2 = false;
+	if (Sprint == false && SprintEnergy < 100) SprintEnergy += 0.1f;
+	if (Sprint == true && SprintEnergy > 0.2) SprintEnergy -= 0.1f;
+	if (SprintEnergy >= 0.1)
+		Spr = Sprint;
+	else Spr = false;
 }
 
 // Called to bind functionality to input
@@ -83,6 +79,7 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAxis("MoveForward", this, &ALMADefaultCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);	
 	PlayerInputComponent->BindAxis("Mouse", this, &ALMADefaultCharacter::Mouse0);
+	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &ALMADefaultCharacter::Sprint0);
 }
 void ALMADefaultCharacter::MoveForward(float Value) {
 	AddMovementInput(GetActorForwardVector(), Value);
@@ -100,9 +97,7 @@ void ALMADefaultCharacter::Mouse0(float Value) {
 
 void ALMADefaultCharacter::OnDeath()
 {
-	/*PlayAnimMontage(DeathMontage);
-	GetCharacterMovement()->DisableMovement();
-	SetLifeSpan(5.0f);*/
+	
 	CurrentCursor->DestroyRenderState_Concurrent();
 	PlayAnimMontage(DeathMontage);
 	GetCharacterMovement()->DisableMovement();
@@ -135,3 +130,4 @@ void ALMADefaultCharacter::RotationPlayerOnCursor()
 		}
 	}
 }
+void ALMADefaultCharacter::Sprint0() { Sprint_1 = true; Sprint_2 = true; Sprint = true; };
