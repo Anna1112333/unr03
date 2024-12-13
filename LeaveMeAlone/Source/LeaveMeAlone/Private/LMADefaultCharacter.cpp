@@ -43,6 +43,7 @@ ALMADefaultCharacter::ALMADefaultCharacter()
 void ALMADefaultCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	OnSprint.Broadcast(Spr);
 	if (CursorMaterial)
 	{
 		CurrentCursor = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), CursorMaterial, CursorSize, FVector(0));

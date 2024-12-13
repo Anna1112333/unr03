@@ -8,6 +8,8 @@
 //#include "D:\Games2024\Task\Ta_3\LeaveMeAlone\Intermediate\Build\Win64\UnrealEditor\Inc\LeaveMeAlone\UHT\LMADefaultCharacter.generated.h"
 #include "LMADefaultCharacter.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnSprint, bool);
+
 class UCameraComponent;
 class USpringArmComponent;
 class UHealthComponent;
@@ -23,6 +25,9 @@ public:
 	ALMADefaultCharacter();
 	UFUNCTION()
 	UHealthComponent* GetHealthComponent() const { return HealthComponent; }
+	UFUNCTION(BlueprintCallable)
+	bool IsSprint()const { return Spr; };
+	FOnSprint OnSprint;
 private:
 	float YRotation = -75.0f; // отвечает за поворот камеры по оси Y.
 	float ArmLength = 1400.0f; // отвечает за длину штатива.
