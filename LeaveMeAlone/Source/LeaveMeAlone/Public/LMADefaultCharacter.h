@@ -4,6 +4,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Components\HealthComponent.h"
+#include "Components\LMAWeaponComponent.h"
 #include "D:\Games2024\Task\Ta_3\LeaveMeAlone\Source\LeaveMeAlone\Public\LMAGameMode.h"    //+++ сама поняла
 //#include "D:\Games2024\Task\Ta_3\LeaveMeAlone\Intermediate\Build\Win64\UnrealEditor\Inc\LeaveMeAlone\UHT\LMADefaultCharacter.generated.h"
 #include "LMADefaultCharacter.generated.h"
@@ -14,6 +15,7 @@ class UCameraComponent;
 class USpringArmComponent;
 class UHealthComponent;
 class UAnimMontage;
+class ULMAWeaponComponent;
 
 UCLASS()
 class LEAVEMEALONE_API ALMADefaultCharacter : public ACharacter
@@ -72,7 +74,8 @@ protected:
 	USpringArmComponent* SpringArmComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UCameraComponent* CameraComponent;
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	ULMAWeaponComponent* WeaponComponent;
 public:	
 
 	// Called every frame

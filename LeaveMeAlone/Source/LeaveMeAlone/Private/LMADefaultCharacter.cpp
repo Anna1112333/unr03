@@ -10,6 +10,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/HealthComponent.h"
+#include "Components/LMAWeaponComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/Engine.h"
 
@@ -37,6 +38,7 @@ ALMADefaultCharacter::ALMADefaultCharacter()
 
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
+	WeaponComponent = CreateDefaultSubobject<ULMAWeaponComponent>("Weapon");
 }
 
 
